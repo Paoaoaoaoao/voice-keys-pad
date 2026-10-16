@@ -1,0 +1,72 @@
+# 口述手柄按键表 —— 改这个文件就行，程序每 1 秒自动重载，不用重启
+# 程序：本目录「口述手柄.bat」 -> ptt_pad.py（本文件复制成 口述按键.txt 就能用）
+#
+# ！保存注意：记事本默认就是 UTF-8，直接保存没问题。这个文件里我刻意不写
+#   方块/叉/圈/三角那四个图形符号，所以就算你误存成 ANSI(GBK) 也不会坏。
+#
+# 写法：  手柄键 = 动作
+# 动作五种：
+#   tap:组合键     按下发一次；一直按住就自动连发（跟键盘上按住不放一个效果）
+#   once:组合键    只发一次，按住也不连发（不想被连发的那颗键用它）
+#   hold:组合键    按住期间键不抬起，松开才释放（给"按住说话"型平台）
+#   dict           本地转写：按住录音、松开转写并把字打进当前窗口
+#   off            不响应
+#
+# 组合键可以只写修饰键：
+#   F13    CTRL+WIN    WIN+SHIFT+S    CTRL+ALT+T    CTRL+Z
+# 按下节奏：先按第一个，隔 100ms 再按第二个（再往下类推），全按下停 20ms
+#   再倒序抬起。这两个数字在 ptt_pad.py 里 COMBO_STEP_MS / COMBO_HOLD_MS。
+# 修饰键：CTRL ALT SHIFT WIN（要分左右写 LCTRL RCTRL LALT RALT LSHIFT RSHIFT）
+# 能用的键名：字母A-Z 数字0-9 F1-F24 ENTER TAB ESC SPACE BACKSPACE DEL DELETE
+#            HOME END PGUP PGDN LEFT UP RIGHT DOWN PRTSC SCROLLLOCK PAUSE APPS
+#            VOLMUTE VOLDOWN VOLUP PLAYPAUSE MINUS EQUALS COMMA PERIOD SLASH
+#
+# 手柄键名（2026-10-11 在一副 USB 接线的 DualSense 上实测过的才列出来）：
+#   L1  R1  R2  CREATE  OPTIONS  UP DOWN LEFT RIGHT(十字四向)
+#   SQUARE=方块  X 或 CROSS=叉  CIRCLE 或 O=圈  TRIANGLE 或 TRI=三角
+#   TOUCH=触摸板按下   MUTE=麦克风静音键   PS=索尼logo(别用,会唤Game Bar)
+#   L2 / L3 / R3 还没实测到位偏移；要用先跑 python ds_probe.py 认一遍再填 PAD_BITS
+#
+# 两个模式，同时按 L1+R1 切换：
+#   [平台] 程序完全不碰麦克风，只按下面的表发键，识别交给平台自己
+#   [本地] 程序开麦，按住=录 松开=转写落字
+
+[平台]
+R2 = hold:CTRL+SHIFT+SPACE
+X = tap:ENTER
+CIRCLE = tap:CTRL+Z
+TRIANGLE = off
+SQUARE = tap:BACKSPACE
+UP = off
+DOWN = off
+
+[本地]
+R2 = dict
+X = tap:ENTER
+CIRCLE = tap:CTRL+Z
+TRIANGLE = off
+SQUARE = tap:BACKSPACE
+UP = off
+DOWN = off
+
+# 通知监视：任何软件弹 Windows 系统通知（比如某个工具跑完一轮），手柄就震一下。
+# 只读系统通知库 wpndatabase.db（在 LOCALAPPDATA 下），不改系统、不写任何东西。
+#   启用 = 是/否      灯 = 是/否（震的同时灯条闪红两下）
+#   关键词 = 逗号分隔，正文含任一个才震；留空 = 任何通知都震
+#   间隔 = 1  几秒查一次，别低于 0.3
+[通知]
+启用 = 是
+关键词 = 完成
+灯 = 是
+间隔 = 0.5
+
+# 按住连发的手感（只管 tap: 的键；once:/hold:/dict 不受这里影响）
+#   连发     = 是/否，否 = 回到"按一下只发一次"
+#   连发启动 = 0.4  按住多久之后开始连发（秒）
+#   连发间隔 = 0.033 开始连发后每隔多少秒补发一次（0.033 约等于每秒 30 下）
+#   实测的上限：单键一次 tap 花 21ms（约 47 下/秒封顶），组合键如 CTRL+Z 一次
+#   花 123ms（约 8 下/秒封顶）。写得更小也发不出更快，会被 tap 自身耗时托住。
+[手感]
+连发 = 是
+连发启动 = 0.4
+连发间隔 = 0.033

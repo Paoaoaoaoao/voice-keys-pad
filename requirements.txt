@@ -1,0 +1,10 @@
+# 只用 [平台] 模式（把手柄键映射成键盘码，不碰麦克风）需要这些：
+numpy
+sounddevice
+scipy
+
+# [本地] 模式（按住录音、松开了本地 SenseVoice 转写）额外要这两个。
+# 体积很大：torch 的 CUDA 版按你的显卡去 https://pytorch.org 选命令装，
+# 这里写的 torch 只是占位，模型权重首次加载会再下载约 900 MB。
+funasr
+torch

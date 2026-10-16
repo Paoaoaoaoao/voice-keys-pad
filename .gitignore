@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+# 本地跑出来的东西，不入库
+口述历史.txt
+口述目标.txt
+口述测试/
+/手柄按键映射.txt
+口述按键.txt
+*.wav
+_qt*.log
