@@ -7,8 +7,8 @@
 最后这条能走：拿 Raw Input 给出的接口路径直接 CreateFile（只读、共享），
 ReadFile 阻塞收报告。不抢独占、不用关 Steam、不动驱动。
 
-用法：双击桌面「手柄按键探针.bat」，依次按键，每键按住约 1 秒再松。
-输出写进 E:\\AI\\TTS\\手柄按键映射.txt
+用法：python ds_probe.py，依次按键，每键按住约 1 秒再松。
+输出写进脚本同目录的 手柄按键映射.txt
 
 自检：python ds_probe.py --selftest   （监听 12 秒，期间随手按几下 L1/R1）
 """

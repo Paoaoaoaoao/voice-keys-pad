@@ -40,7 +40,7 @@ SR_ASR = 16000      # SenseVoice 要 16k，手柄那边是 48k
 
 
 def find_conf():
-    r"""键表放在哪都能找到：桌面「口述手柄」文件夹 > 桌面根 > E:\AI\TTS。
+    r"""键表放在哪都能找到：桌面「口述手柄」文件夹 > 桌面根 > 脚本同目录。
     路径写死过一次，搬个文件夹就找不到键表，所以改成按候选顺序找。"""
     desk = os.path.join(os.path.expanduser("~"), "Desktop")
     cands = [os.path.join(desk, "口述手柄", "口述按键.txt"),
